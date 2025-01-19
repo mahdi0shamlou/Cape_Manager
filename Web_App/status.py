@@ -1,46 +1,56 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, Depends, HTTPException
 import libvirt
+#----------------------------------- lib that we created
+from lib.LibvirtConnectionManager_File import LibvirtConnectionManager
+#------------------------------------------------
+
 
 router = APIRouter()
 
+
+# Dependency to get the connection manager
+def get_libvirt_manager() -> LibvirtConnectionManager:
+    return LibvirtConnectionManager()
+
+
 @router.get("/status/")
-async def read_status():
-    conn = libvirt.open('qemu:///system')
-    if conn is None:
-        raise Exception("Failed to open connection to qemu:///system")
-    domains = conn.listAllDomains()
+async def read_status(manager: LibvirtConnectionManager = Depends(get_libvirt_manager)):
+    try:
+        conn = manager.get_connection()
+        domains = conn.listAllDomains()
 
-    vm_status_list = []
+        vm_status_list = []
+        for domain in domains:
+            vm_info = {
+                'name': domain.name(),
+                'id': domain.ID(),
+                'state': domain.state()[0]
+            }
+            vm_status_list.append(vm_info)
 
-    for domain in domains:
-        vm_info = {
-            'name': domain.name(),
-            'id': domain.ID(),
-            'state': domain.state()[0]  # state returns a tuple (state, reason)
-        }
-        vm_status_list.append(vm_info)
+        return vm_status_list
+    except libvirt.libvirtError as e:
+        raise HTTPException(status_code=500, detail=f"Error fetching VM status: {str(e)}")
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Unexpected error: {str(e)}")
 
-    conn.close()
-    return vm_status_list
 
 @router.get("/status/{vm_name}")
-async def read_vm_details(vm_name: str):
-    conn = libvirt.open('qemu:///system')
-    if conn is None:
-        raise Exception("Failed to open connection to qemu:///system")
-
+async def read_vm_details(vm_name: str, manager: LibvirtConnectionManager = Depends(get_libvirt_manager)):
     try:
+        conn = manager.get_connection()
         domain = conn.lookupByName(vm_name)
+
         vm_info = {
             'name': domain.name(),
             'id': domain.ID(),
             'state': domain.state()[0],
-            'info': domain.info(),  # This returns detailed information about the VM
-            'xml_desc': domain.XMLDesc()  # This returns the XML description of the VM
+            'info': domain.info(),
+            'xml_desc': domain.XMLDesc()
         }
-    except libvirt.libvirtError as e:
-        conn.close()
-        raise HTTPException(status_code=404, detail=f"VM with ID {vm_name} not found: {str(e)}")
 
-    conn.close()
-    return vm_info
+        return vm_info
+    except libvirt.libvirtError as e:
+        raise HTTPException(status_code=404, detail=f"VM with name '{vm_name}' not found: {str(e)}")
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Unexpected error: {str(e)}")
