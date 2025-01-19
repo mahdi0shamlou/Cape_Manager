@@ -3,3 +3,4 @@ uvicorn
 httpx
 libvirt-python
 pytest
+python-multipart
