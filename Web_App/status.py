@@ -5,7 +5,7 @@ from lib.LibvirtConnectionManager_File import LibvirtConnectionManager
 #------------------------------------------------
 
 
-router = APIRouter()
+router_status = APIRouter()
 
 
 # Dependency to get the connection manager
@@ -13,7 +13,7 @@ def get_libvirt_manager() -> LibvirtConnectionManager:
     return LibvirtConnectionManager()
 
 
-@router.get("/status/")
+@router_status.get("/status/")
 async def read_status(manager: LibvirtConnectionManager = Depends(get_libvirt_manager)):
     try:
         conn = manager.get_connection()
@@ -35,7 +35,7 @@ async def read_status(manager: LibvirtConnectionManager = Depends(get_libvirt_ma
         raise HTTPException(status_code=500, detail=f"Unexpected error: {str(e)}")
 
 
-@router.get("/status/{vm_name}")
+@router_status.get("/status/{vm_name}")
 async def read_vm_details(vm_name: str, manager: LibvirtConnectionManager = Depends(get_libvirt_manager)):
     try:
         conn = manager.get_connection()
@@ -54,3 +54,5 @@ async def read_vm_details(vm_name: str, manager: LibvirtConnectionManager = Depe
         raise HTTPException(status_code=404, detail=f"VM with name '{vm_name}' not found: {str(e)}")
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Unexpected error: {str(e)}")
+
+

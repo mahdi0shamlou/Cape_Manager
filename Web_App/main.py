@@ -1,8 +1,9 @@
 from fastapi import FastAPI
-import status
+import status, machines
 
 app = FastAPI()
-app.include_router(status.router)
+app.include_router(status.router_status)
+app.include_router(machines.router_machines)
 
 # Check if the script is run directly and start the server
 if __name__ == "__main__":

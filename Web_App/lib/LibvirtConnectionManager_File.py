@@ -1,5 +1,6 @@
 import libvirt
 
+
 class LibvirtConnectionManager:
     _instance = None
 
