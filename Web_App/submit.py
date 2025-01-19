@@ -56,7 +56,7 @@ async def upload_file_route(file: UploadFile = File(...), machine_name: str = Fo
 
         if task_id is None:
             raise HTTPException(status_code=500, detail="Failed to upload file.")
-        time.sleep(10)
+        time.sleep(10) # this sleep is necessary
         # Start the virtual machine using LibvirtConnectionManager
         try:
             conn = manager.get_connection()
