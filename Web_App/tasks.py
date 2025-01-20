@@ -17,6 +17,7 @@ async def get_status_of_list_task():
     except requests.exceptions.RequestException as e:
         raise HTTPException(status_code=500, detail=f"Error fetching tasks: {str(e)}")
 
+
 @router_tasks.get("/tasks/status/{task_id}/")
 async def get_status_of_one_task(task_id: int):
     """Fetches the list of tasks from the external API and returns the response."""
@@ -30,6 +31,7 @@ async def get_status_of_one_task(task_id: int):
     except requests.exceptions.RequestException as e:
         raise HTTPException(status_code=500, detail=f"Error fetching tasks: {str(e)}")
 
+
 @router_tasks.get("/tasks/report/{task_id}/")
 async def get_report_of_one_task(task_id: int):
     """Fetches the list of tasks from the external API and returns the response."""
@@ -42,6 +44,7 @@ async def get_report_of_one_task(task_id: int):
 
     except requests.exceptions.RequestException as e:
         raise HTTPException(status_code=500, detail=f"Error fetching tasks: {str(e)}")
+
 
 @router_tasks.get("/tasks/iocs/{task_id}/")
 async def get_iocs_of_one_task(task_id: int):
