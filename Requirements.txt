@@ -4,3 +4,4 @@ httpx
 libvirt-python
 pytest
 python-multipart
+configparser
