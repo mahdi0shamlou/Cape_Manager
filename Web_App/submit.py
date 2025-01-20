@@ -8,7 +8,7 @@ from datetime import datetime, timedelta
 # Import your custom connection manager
 from lib.LibvirtConnectionManager_File import LibvirtConnectionManager
 
-router_submit = APIRouter()
+router_submit = APIRouter(tags=["Submit Task To cape"])
 
 
 # Dependency to get the connection manager

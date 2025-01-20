@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException
 import requests
 
-router_tasks = APIRouter()
+router_tasks = APIRouter(tags=["Status Of Task"])
 
 
 @router_tasks.get("/tasks/list/")

@@ -5,7 +5,7 @@ from lib.LibvirtConnectionManager_File import LibvirtConnectionManager
 #------------------------------------------------
 
 
-router_status = APIRouter()
+router_status = APIRouter(tags=["Status Of Kvm Machines"])
 
 
 # Dependency to get the connection manager
