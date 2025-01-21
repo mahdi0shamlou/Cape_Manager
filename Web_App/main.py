@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-import status, machines, submit, tasks
+import status, machines, submit, tasks, cape
 
 app = FastAPI()
 app.title="Cape Manager"
@@ -7,6 +7,7 @@ app.include_router(status.router_status) # these routes work on status of kvm ma
 app.include_router(machines.router_machines) # these routes work on turn off or on in kvm machines
 app.include_router(submit.router_submit) # these routes work on submit a task
 app.include_router(tasks.router_tasks) # these routes work on details of tasks
+app.include_router(cape.router_cape) # these routes work on managing of cape service
 
 # Check if the script is run directly and start the server
 if __name__ == "__main__":
