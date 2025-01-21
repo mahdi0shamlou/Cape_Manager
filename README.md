@@ -12,3 +12,6 @@ machines -> # these routes work on turn off or on in kvm machines
 submit   -> # these routes work on submit a task
 
 tasks    -> # these routes work on details of tasks
+
+cape     -> # these routes work on managing of cape service
+
