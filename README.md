@@ -1,9 +1,9 @@
 # Cape_Manager
 This is a fastapi web app for managing cape
 
-in this program we have 4 routes that create for managing kvm machines and managing cape task
+in this program we have 5 routes that create for managing kvm machines and managing cape task
 
-# We have 4 routes 
+# We have 5 routes 
 
 status   -> # these routes work on status of kvm machines
 
