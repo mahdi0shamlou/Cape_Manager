@@ -35,7 +35,7 @@ async def read_status(manager: LibvirtConnectionManager = Depends(get_libvirt_ma
         raise HTTPException(status_code=500, detail=f"Unexpected error: {str(e)}")
 
 
-@router_status.get("/status/{vm_name}")
+@router_status.get("/status/{vm_name}/")
 async def read_vm_details(vm_name: str, manager: LibvirtConnectionManager = Depends(get_libvirt_manager)):
     try:
         conn = manager.get_connection()

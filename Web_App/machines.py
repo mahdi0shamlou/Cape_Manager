@@ -13,7 +13,7 @@ def get_libvirt_manager() -> LibvirtConnectionManager:
     return LibvirtConnectionManager()
 
 
-@router_machines.post("/machines/start/{vm_name}")
+@router_machines.post("/machines/start/{vm_name}/")
 async def start_vm(vm_name: str, manager: LibvirtConnectionManager = Depends(get_libvirt_manager)):
     try:
         conn = manager.get_connection()
@@ -30,7 +30,7 @@ async def start_vm(vm_name: str, manager: LibvirtConnectionManager = Depends(get
         raise HTTPException(status_code=500, detail=f"Unexpected error: {str(e)}")
 
 
-@router_machines.post("/machines/stop/{vm_name}")
+@router_machines.post("/machines/stop/{vm_name}/")
 async def stop_vm(vm_name: str, manager: LibvirtConnectionManager = Depends(get_libvirt_manager)):
     try:
         conn = manager.get_connection()
