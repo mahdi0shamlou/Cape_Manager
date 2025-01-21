@@ -28,7 +28,7 @@ async def read_status(manager: LibvirtConnectionManager = Depends(get_libvirt_ma
             }
             vm_status_list.append(vm_info)
 
-        return vm_status_list
+        return {"status" : "okay" ,"data" : vm_status_list}
     except libvirt.libvirtError as e:
         raise HTTPException(status_code=500, detail=f"Error fetching VM status: {str(e)}")
     except Exception as e:
