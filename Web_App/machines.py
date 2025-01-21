@@ -5,7 +5,7 @@ from lib.LibvirtConnectionManager_File import LibvirtConnectionManager
 #------------------------------------------------
 
 
-router_machines = APIRouter(tags=["Action on kvm machine"])
+router_machines = APIRouter(tags=["Action on kvm machine (* please dont touch *)"])
 
 
 # Dependency to get the connection manager
