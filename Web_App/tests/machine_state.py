@@ -6,19 +6,18 @@ from fastapi.testclient import TestClient
 
 client = TestClient(app)
 
-
-def test_status():
-    response = client.get("/status/")
+def test_machines_start():
+    response = client.get("/machines/start/win10-1/")
 
     assert response.status_code == 200
     res = response.json()
-    for i in ["data", "status"]:
+    for i in ["message"]:
         assert i in res
 
-def test_status():
-    response = client.get("/status/win10-1/")
+def test_machines_stop():
+    response = client.get("/machines/stop/win10-1/")
 
     assert response.status_code == 200
     res = response.json()
-    for i in ["name", "id"]:
+    for i in ["message"]:
         assert i in res
