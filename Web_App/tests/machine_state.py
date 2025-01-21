@@ -7,7 +7,7 @@ from fastapi.testclient import TestClient
 client = TestClient(app)
 
 def test_machines_start():
-    response = client.get("/machines/start/win10-1/")
+    response = client.post("/machines/start/win10-1/")
 
     assert response.status_code == 200
     res = response.json()
@@ -15,7 +15,7 @@ def test_machines_start():
         assert i in res
 
 def test_machines_stop():
-    response = client.get("/machines/stop/win10-1/")
+    response = client.post("/machines/stop/win10-1/")
 
     assert response.status_code == 200
     res = response.json()
