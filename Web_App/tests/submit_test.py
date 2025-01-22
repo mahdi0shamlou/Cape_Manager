@@ -16,7 +16,7 @@ def test_submit():
         "file": (sample_file_name, sample_file_content, "text/plain"),  # (filename, content, content-type)
     }
     data = {
-        "machine_name": "win10-3",
+        "machine_name": "win10-1",
     }
 
     # Send a POST request to the /submit/ endpoint
