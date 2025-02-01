@@ -90,6 +90,9 @@ async def upload_file_route(file: UploadFile = File(...), machine_name: str = Fo
                 if task_id is None:
                     raise HTTPException(status_code=500, detail="Failed to upload file.")
 
+                # Wait for some time before starting the VM
+                #time.sleep(15)
+                #domain.create()  # Start the VM after uploading the file
                 return {"task_id": task_id, "message": message}
             else:
                 return {"Time_shouted": last_shutdown_time_from_db, "Time_last_mines": last_shutdown_time}
