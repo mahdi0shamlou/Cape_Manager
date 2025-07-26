@@ -1,6 +1,7 @@
 from fastapi import APIRouter, HTTPException
 import subprocess
 import re
+import requests
 
 # Create an instance of APIRouter
 router_cape = APIRouter(tags=["Managing Cape Service"])
@@ -49,5 +50,22 @@ async def restart_cape():
             check=True
         )
         return {"status": "success", "message": "Cape service restarted successfully."}
+    except subprocess.CalledProcessError as e:
+        raise HTTPException(status_code=500, detail=f"Error restarting service: {e.stderr}")
+
+@router_cape.post("/cape/revert/")
+async def revert_cape():
+    try:
+        machine_name = "CAPE_MAV_Postgre"
+        snap_shot_name = "Last snapshot"
+
+        url = "http://172.16.100.232:3000/v1/V1/SnapshotManager/revert_snapshot_vm_by_name"
+        params = {"vm_name": machine_name, "snapshot_name": snap_shot_name}
+        
+        response = requests.post(url, params=params)
+        if response.status_code != 200:
+            raise Exception(f"HTTP {response.status_code}: {response.text}")
+
+        return {"status": "success", "message": "Cape machine reverted successfully."}
     except subprocess.CalledProcessError as e:
         raise HTTPException(status_code=500, detail=f"Error restarting service: {e.stderr}")
